@@ -98,6 +98,11 @@
 			aiMessage = await postMessage(messageHistories);
 			loading = false;
 
+			if (aiMessage == '') {
+				messageHistories = [];
+				return;
+			}
+
 			// ChatGPTのメッセージを履歴に記録
 			messageHistories.push(new GptMessage('assistant', aiMessage));
 			messageHistories = messageHistories;
@@ -158,6 +163,7 @@
 
 	<div style="margin-top: 48px; height: 100px;">
 		<p style="color: #0000FF; font-size:24px;">わたし</p>
+
 		{#if loading}
 			<img src="loading.gif" alt="loading">
 		{/if}
@@ -166,7 +172,9 @@
 		{/if}
 	</div>
 
-	<hr />
+	<div style="margin-top: 32px;">
+		<hr />
+	</div>
 	<h2>会話ログ</h2>
 
 	{#each messageHistories as history, i}
